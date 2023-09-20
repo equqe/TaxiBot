@@ -6,12 +6,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env()
 env.read_env()
 
+#######
+##ENV##
+#######
+
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env.bool("DEBUG")
-BASE_URL = env("BASE_URL")
+
+if DEBUG is True:
+    BASE_URL = env("BASE_URL_TEST")
+else:
+    BASE_URL = env("BASE_URL")
 
 ENVIROMENT_CORE_TOKEN = env("CORE_TOKEN")
+#убрать проверку когда будет известен токен
+if ENVIROMENT_CORE_TOKEN is None:
+    pass
+
 TELEGRAM_BOT_WEBHOOK_URL = (
     env.str("TELEGRAM_BOT_WEBHOOK_URL") + ENVIROMENT_CORE_TOKEN + "/"
 )
@@ -19,6 +31,10 @@ TELEGRAM_BOT_WEBHOOK_URL = (
 TELEGRAM_BOT_USERNAME = env.str("TELEGRAM_BOT_USERNAME")
 DADATA_TOKEN = env("DADATA_TOKEN")
 LANDING_ENABLED = env.bool("LANDING_ENABLED")
+
+###########
+##END ENV##
+###########
 
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
