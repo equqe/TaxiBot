@@ -1,0 +1,238 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+
+<div class="container-fluid">
+    <div class="row size-column">
+{#        Карта#}
+        <div class="col-xl-8 xl-50 box-col-12">
+            <div class="card">
+              <div class="card-header card-no-border">
+                <h5>Местоположение</h5>
+              </div>
+              <div class="card-body pt-0">
+                <div class="dash-map">
+                  <div id="mapA"></div>
+                </div>
+
+              </div>
+            </div>
+      </div>
+{#        // Карта#}
+
+{#  Информация #}
+        <div class="col-xl-4 xl-50 box-col-12">
+            {#        Расстояние #}
+            <div class="col-xl-12 box-col-12 col-lg-12 col-md-12">
+                <div class="card o-hidden">
+                  <div class="card-body">
+                    <div class="ecommerce-widgets media">
+                      <div class="media-body">
+                        <p class="f-w-500 font-roboto">Расстояние</p>
+                        <h4 class="f-w-500 mb-0 f-20"><span id='order-distance' class="counter">27</span> км</h4>
+                      </div>
+                      <div class="ecommerce-box light-bg-primary"><i class="fa fa-heart" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    {#        // Стоимость#}
+    {#       Стоимость #}
+            <div class="col-xl-12 box-col-12 col-lg-12 col-md-12">
+                <div class="card o-hidden">
+                  <div class="card-body">
+                    <div class="ecommerce-widgets media">
+                      <div class="media-body">
+                        <p class="f-w-500 font-roboto">Стоимость</p>
+                        <h4 class="f-w-500 mb-0 f-20"><span id='order-cost' class="counter">1200</span> руб</h4>
+                      </div>
+                      <div class="ecommerce-box light-bg-primary"><i class="fa fa-dollar" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    {#       // Стоимость #}
+{#            Время выполнения заказа #}
+            <div class="col-xl-12 box-col-12 col-lg-12 col-md-12">
+                <div class="card o-hidden">
+                  <div class="card-body">
+                    <div class="ecommerce-widgets media">
+                      <div class="media-body">
+                        <p class="f-w-500 font-roboto">Продолжительность</p>
+                        <h4 class="f-w-500 mb-0 f-20"><span id="order-timedelta" class="counter">20</span> мин</h4>
+                      </div>
+                      <div class="ecommerce-box light-bg-primary"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+{#           // Время выполнения заказа #}
+
+        </div>
+{#        // Информация#}
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+                <div class="card o-hidden">
+                  <div class="card-body">
+                    <div class="ecommerce-widgets media">
+                      <div class="media-body">
+                        <p class="f-w-500 font-roboto">Дата принятия заказа</p>
+                        <h4 class="f-w-500 mb-0 f-20">{{ order.take_order_date|date }}</h4>
+                      </div>
+                      <div class="ecommerce-box light-bg-primary"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+        <div class="card o-hidden">
+          <div class="card-body">
+            <div class="ecommerce-widgets media">
+              <div class="media-body">
+                <p class="f-w-500 font-roboto">Статус</p>
+                <h4 class="f-w-500 mb-0 f-20">{{ order.get_status_display }}</h4>
+              </div>
+              <div class="ecommerce-box light-bg-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+        <div class="card o-hidden">
+          <div class="card-body">
+            <div class="ecommerce-widgets media">
+              <div class="media-body">
+                <p class="f-w-500 font-roboto">Вид оплаты</p>
+                <h4 class="f-w-500 mb-0 f-20">{{ order.get_payment_method_display }}</h4>
+              </div>
+              <div class="ecommerce-box light-bg-primary"><i class="fa {% if order.payment_method == "cash" %}fa-money{% else %}fa-credit-card{% endif %}" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% if order.review %}
+        <div class="col-sm-12 col-xl-12 col-md-12">
+                <div class="card card-absolute">
+                  <div class="card-header bg-primary">
+                    <h5 class="text-white">Отзыв {{ order.review.get_stars_display }}</h5>
+                  </div>
+                  <div class="card-body">
+                    <p>{{ order.review.text|default_if_none:'' }}</p>
+                  </div>
+                </div>
+              </div>
+        {% endif %}
+    </div>
+
+    {% if 'dispatcher.view_order' in perms %}
+        <div class="container-fluid">
+    <div class="row size-column">
+        <h4 class="page-title"><i class="fa fa-lock"></i> Информация для администратора</h4>
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Клиент</p>
+                    <h4 class="f-w-500 mb-0 f-20"><a href="{{ order.client.get_absolute_url }}">{{ order.client.first_name }}</a></h4>
+                  </div>
+                    <div class="ecommerce-box light-bg-primary"><img style='width: 60px; border-radius: 50%;' src="{{ order.client.get_photo_url|default_if_none:'' }}"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Водитель</p>
+                    <h4 class="f-w-500 mb-0 f-20"><a href="{{ order.driver.get_absolute_url }}">{{ order.driver.first_name }}</a></h4>
+                  </div>
+                    <div class="ecommerce-box light-bg-primary"><img style='width: 60px; border-radius: 50%;' src="{{ order.driver.get_photo_url|default_if_none:'' }}"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Купон</p>
+                    {% if order.coupon %}
+                        <a href="{{ order.coupon.get_absolute_url }}"><h4 class="f-w-500 mb-0 f-20">{{ order.coupon.name }}</h4></a>
+                    {% else %}
+                        <h4 class="f-w-500 mb-0 f-20">Отсутствует</h4>
+                    {% endif %}   
+
+                  </div>
+                  <div class="ecommerce-box light-bg-primary"><i class="fa fa-percent" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="col-xl-4 box-col-4 col-lg-6 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Номер телефона клиента</p>
+                        <h4 class="f-w-500 mb-0 f-20">{{ order.client_phone }}</h4>
+                  </div>
+                  <div class="ecommerce-box light-bg-primary"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+    {% endif %}
+
+
+
+</div>
+{% load static %}
+<script src="{% static 'cabinet/js/leaflet.js' %}"></script>
+<script src="{% static 'cabinet/js/distance.js' %}"></script>
+<script src="{% static 'cabinet/js/moment.min.js' %}"></script>
+<script>
+    locationA = {{ order.start_location.as_json|safe }}
+    locationB = {{ order.end_location.as_json|safe }}
+    var coordsA = [locationA.latitude, locationA.longitude]
+    var coordsB = [locationB.latitude, locationB.longitude]
+    var mapA = L.map('mapA').setView(coordsA, 9);
+    // Connect png map from open street map
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+      maxZoom: 17,
+      minZoom: 1
+    }).addTo(mapA);
+
+    var markerA = L.marker(coordsA).addTo(mapA).bindPopup("<b>Точка отправления</b><br>{{ order.address  }}").openPopup();
+    var markerB = L.marker(coordsB).addTo(mapA).bindPopup("<b>Точка прибытия</b>")
+
+    distance = calcCrow(...coordsA, ...coordsB)
+    start_date = moment('{{ order.start_ride_date|date:'c' }}')
+    end_date = moment('{{ order.end_date|date:'c' }}')
+    time_delta = (end_date - start_date) / (1000*60)
+    cost = {{ order.cost }}
+    document.querySelector('#order-distance').innerHTML = distance.toFixed(0)
+    document.querySelector('#order-cost').innerHTML = cost
+    document.querySelector('#order-timedelta').innerHTML = Math.ceil(time_delta)
+
+</script>
+
+<script>
+    var mapAdmin = L.map('mapForAdmin').setView(coordsA, 9);
+    // Connect png map from open street map
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+      maxZoom: 17,
+      minZoom: 1
+    }).addTo(mapAdmin);
+</script>

@@ -1,0 +1,28 @@
+.card-footer input {
+    margin-bottom: 5px;
+}
+
+.dash-map {
+	z-index: 500;
+	border-radius: 15px;
+}
+
+div.alert-theme {
+	z-index: 2000 !important;
+}
+
+img.possibilities-icon {
+	width: 68px;
+}
+
+.img-effect .card-body {
+	text-align: start;
+}
+
+.text-muted2 {
+	color: #aeaeae;
+}
+
+.hover-link div:hover {
+	cursor: pointer;
+}

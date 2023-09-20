@@ -1,0 +1,50 @@
+{% extends 'cabinet/layout/base.html' %}
+{% load django_tables2 %}
+
+{% block title %}
+    <title>{% if not title %}ТаксиБер{% else %}{{ title }}{% endif %}</title>
+{% endblock title %}
+
+
+{% block content %}
+     <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-6">
+                  <h3>{% block header %}{% if not header %}Список{% else %}{{ header }}{% endif %}{% endblock header %}</h3>
+                </div>
+                <div class="col-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_dashboard }}"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">
+                    {% block breadcrumb.item1 %}
+                        {% if not breadcrumb_item1 %}
+                            Меню администратора
+                        {% else %}
+                            {{ breadcrumb_item1 }}
+                        {% endif %}
+                    {% endblock breadcrumb.item1 %}</li>
+	            <li class="breadcrumb-item active">{% block breadcrumb.item2 %}{{ breadcrumb_item2 }}{% endblock breadcrumb.item2 %}</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+    {% if not disable_create %}
+    <div class="col-12 mb-5">
+        {% block create_button %}
+            <a href="{{ create_url }}" class="btn btn-pill btn-primary">Создать</a>
+        {% endblock %}
+    </div>
+    {% endif %}
+    <div class="col-12">
+    {% block table %}
+        {% render_table table %}
+    {% endblock table %}
+    </div>
+    {% block export %}
+        {% if not disable_export %}
+            <a href="{% export_url 'xlsx' %}">Скачать для Excel</a>
+        {% endif %}
+    {% endblock export %}
+{% endblock content %}

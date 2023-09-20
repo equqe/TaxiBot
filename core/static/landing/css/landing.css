@@ -1,0 +1,42 @@
+.radio-bronze input[type="radio"] + label::before {
+    border-color: #CD7F32;
+}
+
+.radio-bronze input[type="radio"] + label::after {
+    background-color: #CD7F32;
+}
+
+.badge-bronze {
+    background-color: #CD7F32;
+}
+
+
+.radio-silver input[type="radio"] + label::before {
+    border-color: #C0C0C0;
+}
+
+.radio-silver input[type="radio"] + label::after {
+    background-color: #C0C0C0;
+}
+
+.badge-silver {
+    background-color: #C0C0C0;
+}
+
+.radio-gold input[type="radio"] + label::before {
+    border-color: #FFD700;
+}
+
+.radio-gold input[type="radio"] + label::after {
+    background-color: #FFD700;
+}
+
+.badge-gold {
+    background-color: #FFD700;
+}
+
+li.buy-btn a:hover {
+    cursor: pointer;
+}
+
+

@@ -1,0 +1,42 @@
+{% extends 'cabinet/layout/base.html' %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+
+{% block title %}
+    <title>ТаксиБер — Список пользователей</title>
+
+{% endblock title %}
+
+
+{% block content %}
+     <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-6">
+                  <h3>Список пользователей</h3>
+                </div>
+                <div class="col-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_dashboard }}"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Меню администратора</li>
+                    <li class="breadcrumb-item active">Список пользователей</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+    {% if filter %}
+    <div class="card o-hidden" style="margin: 5px;">
+            <div class="card-header card-no-border">
+                <h4>Фильтры</h4>
+                <form action="" method="get" class="form">
+                    {{ filter.form|crispy }}
+                    {% bootstrap_button 'Отфильтровать' %}
+                </form>
+        </div>
+    </div>
+{% endif %}
+    {% render_table table %}
+    <a href="{% export_url 'xlsx' %}">Скачать для Excel</a>
+{% endblock content %}

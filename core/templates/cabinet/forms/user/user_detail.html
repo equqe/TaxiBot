@@ -1,0 +1,46 @@
+{% extends 'cabinet/layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container-fluid">
+	    <div class="page-title">
+	      <div class="row">
+	        <div class="col-6">
+	          <h3>Информация о пользователе #{{ user.pk }}</h3>
+	        </div>
+	        <div class="col-6">
+	          <ol class="breadcrumb">
+	            <li class="breadcrumb-item"><a href="/cabinet"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+	            <li class="breadcrumb-item">Меню администратора</li>
+	            <li class="breadcrumb-item active">Информация о пользователе</li>
+	          </ol>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	<div class="container-fluid">
+		<div class="row size-column mb-5">
+            {% if user.is_blocked %}
+                {% with ban=user.bans.get_active_ban %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Внимание! </strong> Пользователь заблокирован с "{{ ban.start_date }}" до "{{ ban.end_date }}"
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close" data-bs-original-title="" title=""></button>
+                    </div>
+                {% endwith %}
+            {% endif %}
+            <div class="col-xl-6 box-col-12 col-md-12">
+                {% crispy user_form %}
+            </div>
+            <div class="col-xl-6 box-col-12 col-md-12">
+                {% crispy balance_form %}
+
+                {% crispy telegram_data_form %}
+            </div>
+            <div class="col-xl-12 box-col-12 col-md-12">
+                {% crispy driver_form %}
+            </div>
+            <div class="col-xl-12 box-col-12 col-md-12">
+                {% crispy ban_form %}
+            </div>
+	 	</div>
+	</div>
+{% endblock content %}

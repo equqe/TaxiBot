@@ -1,0 +1,45 @@
+{% extends 'cabinet/layout/base.html' %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="container-fluid">
+	    <div class="page-title">
+	      <div class="row">
+	        <div class="col-6">
+	          <h3>{% block header %}{% if not header %}Информация{% else %}{{ header }}{% endif %}{% endblock header %}</h3>
+	        </div>
+            {% block breadcrumb %}
+	        <div class="col-6">
+	          <ol class="breadcrumb">
+	            <li class="breadcrumb-item"><a href="/cabinet"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+	            <li class="breadcrumb-item">
+                    {% block breadcrumb.item1 %}
+                        {% if not breadcrumb_item1 %}
+                            Меню администратора
+                        {% else %}
+                            {{ breadcrumb_item1 }}
+                        {% endif %}
+                    {% endblock breadcrumb.item1 %}</li>
+	            <li class="breadcrumb-item active">{% block breadcrumb.item2 %}{{ breadcrumb_item2 }}{% endblock breadcrumb.item2 %}</li>
+	          </ol>
+	        </div>
+            {% endblock breadcrumb %}
+	      </div>
+	    </div>
+	  </div>
+
+    <div class="container-fluid">
+		<div class="row size-column mb-5">
+            {% block content.content %}
+                <div class="col-xl-12 box-col-12 col-md-12">
+                    {% block form %}
+                        {% crispy form %}
+                    {% endblock form %}
+                </div>
+                {% block container_extra %}
+                {% endblock container_extra %}
+            {% endblock content.content %}    
+        </div>
+    </div>
+{% endblock content %}

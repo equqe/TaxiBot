@@ -1,0 +1,102 @@
+<form class="theme-form" id="sendRequest">
+  <div class="mb-3">
+    <label class="col-form-label pt-0" for="tel">Номер телефона</label>
+    <input class="form-control" name='tel' id="tel" data-bs-original-title="" title="" required>
+  </div>
+  <div class="mb-3">
+    <label class="col-form-label pt-0" for="name">Имя</label>
+    <input class="form-control" name="name" id="name" data-bs-original-title="" title="" required>
+  </div>
+
+    <div class="mb-3">
+                          <label class="col-form-label pt-0" for="exampleInputPassword1">Тариф</label>
+                        </div>
+    {% if display_tariffs %}                    
+      <ul class="nav nav-tabs border-tab nav-primary" id="send_request_tariff-tab" role="tablist">
+        <li class="nav-item" style="width: 50%;"><a class="nav-link active" id="send_request_info-home-tab" data-bs-toggle="tab" href="#send_request_info-home" role="tab" aria-controls="send_request_info-home" aria-selected="true" data-bs-original-title="" title=""><i class="icofont icofont-man-in-glasses"></i>Аренда</a></li>
+        <li class="nav-item" style="width: 50%;"><a class="nav-link" id="send_request_profile-info-tab" data-bs-toggle="tab" href="#send_request_info-profile" role="tab" aria-controls="send_request_info-profile" aria-selected="false" data-bs-original-title="" title=""><i class="icofont icofont-ui-home"></i>Покупка</a></li>
+      </ul>
+      <div class="mega-horizontal" style="text-align: start;">
+      <div class="tab-content" id="send_request_tariff-tabContent">
+        <div class="tab-pane fade active show" id="send_request_info-home" role="tabpanel" aria-labelledby="send_request_tariff-tab">
+          <div class="card">
+            <div class="media p-20">
+              <div class="form-check radio radio-bronze me-3">
+                <input class="form-check-input" id="radio_bronze" type="radio" name="tariff_type" value="Бронзовый (Аренда)" data-bs-original-title="" title="">
+                <label class="form-check-label" for="radio_bronze" style="background-color: black;"></label>
+              </div>
+              <div class="media-body">
+                <h6 class="mt-0 mega-title-badge">Бронзовый<span class="badge badge-bronze pull-right digits">10.000₽</span></h6>
+                <p>2 диспетчера, 15 водителей. Хороший вариант для тех, кто хочет пощупать рынок</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="media p-20">
+              <div class="form-check radio radio-silver me-3">
+                <input class="form-check-input" id="radio_silver" type="radio" name="tariff_type" value="Серебрянный (Аренда)" data-bs-original-title="" title="">
+                <label class="form-check-label" for="radio_silver"></label>
+              </div>
+              <div class="media-body">
+                <h6 class="mt-0 mega-title-badge">Серебрянный <span class="badge badge-silver pull-right digits">14.000₽</span></h6>
+                <p>5 диспетчеров и 40 водителей. Отличный вариант для владельцев таксопарков</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+        <div class="media p-20">
+          <div class="form-check radio radio-gold me-3">
+            <input class="form-check-input" id="radio_gold" type="radio" name="tariff_type" value="Золотой (Аренда)" data-bs-original-title="" title="">
+            <label class="form-check-label" for="radio_gold"></label>
+          </div>
+          <div class="media-body">
+            <h6 class="mt-0 mega-title-badge">Золотой <span class="badge badge-gold pull-right digits">18.000₽</span></h6>
+            <p>Безлимит диспетчеров и 150 водителей. Для больших служб такси</p>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="send_request_info-profile" role="tabpanel" aria-labelledby="send_request_tariff-tab">
+          <div class="card">
+            <div class="media p-20">
+              <div class="form-check radio radio-bronze me-3">
+                <input class="form-check-input" id="radio_bronze_one" type="radio" name="tariff_type" value="Бронзовый (Покупка)" data-bs-original-title="" title="">
+                <label class="form-check-label" for="radio_bronze_one" style="background-color: black;"></label>
+              </div>
+              <div class="media-body">
+                <h6 class="mt-0 mega-title-badge">Бронзовый<span class="badge badge-bronze pull-right digits">149.000₽</span></h6>
+                <p>2 диспетчера, 15 водителей. Хороший вариант для тех, кто хочет пощупать рынок</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="media p-20">
+              <div class="form-check radio radio-silver me-3">
+                <input class="form-check-input" id="radio_silver_one" type="radio" name="tariff_type" value="Серебрянный (Покупка)" data-bs-original-title="" title="">
+                <label class="form-check-label" for="radio_silver_one"></label>
+              </div>
+              <div class="media-body">
+                <h6 class="mt-0 mega-title-badge">Серебрянный <span class="badge badge-silver pull-right digits">259.000₽</span></h6>
+                <p>5 диспетчеров и 40 водителей. Отличный вариант для владельцев таксопарков</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+        <div class="media p-20">
+          <div class="form-check radio radio-gold me-3">
+            <input class="form-check-input" id="radio_gold_one" type="radio" name="tariff_type" value="Золотой (Покупка)" data-bs-original-title="" title="">
+            <label class="form-check-label" for="radio_gold_one"></label>
+          </div>
+          <div class="media-body">
+            <h6 class="mt-0 mega-title-badge">Золотой <span class="badge badge-gold pull-right digits">369.000₽</span></h6>
+            <p>Безлимит диспетчеров и 150 водителей. Для больших служб такси</p>
+          </div>
+        </div>
+          </div>
+        </div>     
+    
+      
+      </div>
+    </div>
+    {% endif %}
+</form>

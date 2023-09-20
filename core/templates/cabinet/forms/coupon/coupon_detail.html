@@ -1,0 +1,21 @@
+{% extends 'cabinet/layout/detail.html' %}
+
+
+{% block header %}Информация о купоне{% endblock %}
+{% block breadcrumb.item2 %}Информация о купоне{% endblock breadcrumb.item2 %}
+
+{% block container_extra %}
+	<div class="col-xl-12 box-col-12 col-md-12">
+		<div class="card">
+          <div class="card-body">
+            <div class="ecommerce-widgets media">
+              <div class="media-body">
+                <p class="f-w-500 font-roboto">Ссылка для применения купона</p>
+                <h4 class="f-w-500 mb-0 f-20"><a href='{{ coupon.get_telegram_url }}'>{{ coupon.get_telegram_url }}</a></h4>
+              </div>
+              <div class="ecommerce-box light-bg-primary"><i class="fa fa-link" aria-hidden="true"></i></div>
+            </div>
+          </div>
+        </div>
+	</div>
+{% endblock %}

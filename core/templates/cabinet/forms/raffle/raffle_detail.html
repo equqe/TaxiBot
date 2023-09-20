@@ -1,0 +1,64 @@
+{% extends 'cabinet/layout/detail.html' %}
+
+
+{% block header %}Розыгрыш #{{raffle.pk}}{% endblock %}
+{% block breadcrumb.item2 %}
+Информация о розыгрыше
+{% endblock breadcrumb.item2 %}
+
+{% block content.content %}
+		<div class="col-xl-6 box-col-6 col-lg-6 col-md-12">
+				    <div class="card o-hidden">
+				      <div class="card-body">
+				        <div class="ecommerce-widgets media">
+				          <div class="media-body">
+				            <p class="f-w-500 font-roboto">Победитель</p>
+				            <h4 class="f-w-500 mb-0 f-20"><a href="{{ raffle.winner.get_absolute_url }}">{{ raffle.winner }}</a></h4>
+				          </div>
+				            <div class="ecommerce-box light-bg-primary"><img style='width: 60px; border-radius: 50%;' src="{{ raffle.winner.get_photo_url|default_if_none:'' }}"></div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+		
+		<div class="col-xl-6 box-col-6 col-lg-6 col-md-12">
+                <div class="card o-hidden">
+                  <div class="card-body">
+                    <div class="ecommerce-widgets media">
+                      <div class="media-body">
+                        <p class="f-w-500 font-roboto">Дата и время проведения</p>
+                        <h4 class="f-w-500 mb-0 f-20">{{ raffle.date }}</h4>
+                      </div>
+                      <div class="ecommerce-box light-bg-primary"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        <div class="col-xl-12 box-col-12 col-lg-12 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Купон</p>
+                        <a href="{{ raffle.coupon.get_absolute_url }}"><h4 class="f-w-500 mb-0 f-20">{{ raffle.coupon.name }}</h4></a>
+                  </div>
+                  <div class="ecommerce-box light-bg-primary"><i class="fa fa-percent" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+    <div class="col-xl-12 box-col-12 col-lg-12 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-body">
+                <div class="ecommerce-widgets media">
+                  <div class="media-body">
+                    <p class="f-w-500 font-roboto">Сообщение</p>
+                        <a href="{{ raffle.message.get_absolute_url }}"><h4 class="f-w-500 mb-0 f-20">{{ raffle.message }}</h4></a>
+                  </div>
+                  <div class="ecommerce-box light-bg-primary"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock content.content %}

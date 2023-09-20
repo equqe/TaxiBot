@@ -1,0 +1,309 @@
+{% load static %}
+{% url 'cabinet:index' as url_cabinet %}
+{% url 'cabinet:dashboard' as url_dashboard %}
+{% url 'cabinet:orders' as orders_cabinet %}
+{% url 'cabinet:users' as users_admin %}
+{% url 'cabinet:order_list_admin' as orders_admin %}
+{% url 'cabinet:coupon_list_driver' as url_coupon_list_driver%}
+{% url 'cabinet:coupon_list_admin' as coupon_list_admin %}
+{% url 'cabinet:city_list' as city_list %}
+{% url 'cabinet:settings_admin' as settings_admin %}
+{% url 'cabinet:message_list' as message_list %}
+{% url 'cabinet:mailing_list' as mailing_list %}
+{% url 'cabinet:raffle_list' as raffle_list %}
+{% url 'cabinet:present_list_view' as present_list %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="В кабинете можно быстро и удобно управлять системой ТаксиБер">
+    <meta name="author" content="chatupper">
+    <link rel="icon" href="{% static 'cabinet/images/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'cabinet/images/favicon.png' %}" type="image/x-icon">
+      {% block title %}
+        <title>ТаксиБер</title>
+      {% endblock title %}
+    <!-- Google font-->
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/font-awesome.css' %}">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/icofont.css' %}">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/themify.css' %}">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/flag-icon.css' %}">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/feather-icon.css' %}">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/scrollbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/chartist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/date-picker.css' %}">
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/bootstrap.css' %}">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/style.css' %}">
+    <link id="color" rel="stylesheet" href="{% static 'cabinet/css/color-1.css' %}" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/timepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/vendors/jquery.datetimepicker.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cabinet/css/custom.css' %}">
+    {% block extra_head %}
+    {% endblock extra_head %}
+  </head>
+  <body>
+    <div class="loader-wrapper">
+      <div class="loader-index"><span></span></div>
+      <svg>
+        <defs></defs>
+        <filter id="goo">
+          <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+          <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+        </filter>
+      </svg>
+    </div>
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+      <!-- Page Header Start-->
+      <div class="page-header">
+        <div class="header-wrapper row m-0">
+          <form class="form-inline search-full col" action="#" method="get">
+            <div class="form-group w-100">
+              <div class="Typeahead Typeahead--twitterUsers">
+                <div class="u-posRelative">
+                  <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text" placeholder="Search Cuba .." name="q" title="" autofocus>
+                  <div class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Загрузка...</span></div><i class="close-search" data-feather="x"></i>
+                </div>
+                <div class="Typeahead-menu"></div>
+              </div>
+            </div>
+          </form>
+          <div class="header-logo-wrapper col-auto p-0">
+            <div class="logo-wrapper"><a href="{{ url_cabinet }}"><img class="img-fluid" src="{% static 'cabinet/images/logo/logo.png' %}" alt=""></a></div>
+            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
+          </div>
+          <div class="left-header col horizontal-wrapper ps-0">
+          </div>
+          <div class="nav-right col-8 pull-right right-header p-0">
+            <ul class="nav-menus">
+              <li>
+                <div class="mode"><i class="fa fa-moon-o"></i></div>
+              </li>
+              <li class="maximize"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i data-feather="maximize"></i></a></li>
+              <li class="profile-nav onhover-dropdown p-0 me-0">
+                
+                <div class="media profile-media"><img class="b-r-10" src="{{ request.user.get_photo_url }}" alt="">
+                  <div class="media-body"><span>{{request.user.first_name}}</span>
+                    <p class="mb-0 font-roboto">{{request.user.status_name}} <i class="middle fa fa-angle-down"></i></p>
+                  </div>
+                </div>
+                <ul class="profile-dropdown onhover-show-div">
+{#                  <li><a href="#"><i data-feather="user"></i><span>Профиль </span></a></li>#}
+                  {# <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li> #}
+                  {# <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li> #}
+{#                  <li><a href="#"><i data-feather="settings"></i><span>Настройки</span></a></li>#}
+                  <li><a href="{% url 'cabinet:logout' %}"><i data-feather="log-in"> </i><span>Выйти</span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+           
+        </div>
+      </div>
+      <!-- Page Header Ends -->
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        <!-- Page Sidebar Start-->
+        <div class="sidebar-wrapper">
+          <div>
+            <div class="logo-wrapper"><a href="{{ url_cabinet }}">
+                <img class="img-fluid for-light" src="{%  static 'cabinet/images/logo/logo.png' %}" alt="">
+                <img class="img-fluid for-dark" src="{%  static 'cabinet/images/logo/logo_dark.png' %}" alt=""></a>
+              <div class="back-btn"><i class="fa fa-angle-left"></i></div>
+              <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
+            </div>
+            <div class="logo-icon-wrapper"><a href="{{ url_cabinet }}"><img class="img-fluid" src="{% static 'cabinet/images/logo/logo-icon.png' %}" alt=""></a></div>
+            <nav class="sidebar-main">
+              <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
+              <div id="sidebar-menu">
+{#              Padding bottom because lags on mobiles while scroll notfull height #}
+                <ul class="sidebar-links" id="simple-bar" style="padding-bottom: 1000px;">
+                  <li class="back-btn"><a href="{{ url_cabinet }}"><img class="img-fluid" src="{% static 'cabinet/images/logo/logo-icon.png' %}" alt=""></a>
+                    <div class="mobile-back text-end"><span>Назад</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
+                  </li>
+                  
+                  <li class="sidebar-main-title">
+                    <div>
+                      <h6 class="lan-1">Меню водителя</h6>
+                      <p class="lan-2">Статистика и история заказов</p>
+                    </div>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title link-nav 
+                    {% if request.path == url_cabinet %}active{% endif %}" href="{{url_cabinet}}">
+                      <i data-feather="home"></i>
+                      <span>Кабинет</span>
+                    </a>
+                    <a class="sidebar-link sidebar-title link-nav
+                    {% if request.path == orders_cabinet %}active{% endif %}" href="{% url 'cabinet:orders' %}">
+                      <i data-feather="archive"></i>
+                      <span>История заказов</span>
+                    </a>
+                    <a class="sidebar-link sidebar-title link-nav
+                    {% if request.path == url_coupon_list_driver %}active{% endif %}" href="{{url_coupon_list_driver}}">
+                      <i data-feather="percent"></i>
+                      <span>Купоны</span>
+                    </a>
+                  </li>
+                {% if request.user.is_staff %}
+                    <li class="sidebar-main-title">
+                    <div>
+                      <h6 class="lan-1">Меню администратора</h6>
+                      <p class="lan-2">Только для администраторов</p>
+                    </div>
+                  </li>
+
+                  <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                    {% if request.path == url_dashboard %}active{% endif %}" href="{{ url_dashboard }}"><i data-feather="airplay"></i><span class="lan-6">Панель управления</span></a></li>
+
+                    {% if perms.cabinet.view_user %}
+                      <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                        {% if request.path == users_admin %}active{% endif %}" href="{{ users_admin }}"><i data-feather="users"></i><span class="lan-6">Пользователи</span></a></li>
+                    {% endif %}
+                {% if perms.dispatcher.view_order %}
+                  <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == orders_admin %}active{% endif %}" href="{{ orders_admin }}"><i data-feather="archive"></i><span class="lan-6">Заказы</span></a></li>
+                {% endif %}
+
+                {% if perms.dispatcher.view_city %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == city_list %}active{% endif %}" href="{{ city_list }}"><i data-feather="home"></i><span class="lan-6">Города</span></a></li>
+                {% endif %}
+
+                {% if perms.referral.view_coupon %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == coupon_list_admin %}active{% endif %}" href="{{ coupon_list_admin }}"><i data-feather="percent"></i><span class="lan-6">Купоны</span></a></li>
+                {% endif %}
+
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == settings_admin %}active{% endif %}" href="{{ settings_admin }}"><i data-feather="settings"></i><span class="lan-6">Настройки</span></a></li>
+
+                {% if perms.referral.view_mailing %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == mailing_list %}active{% endif %}" href="{{ mailing_list }}"><i data-feather="send"></i><span class="lan-6">Рассылки</span></a></li>
+                {% endif %}
+
+                {% if perms.referral.view_message %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == message_list %}active{% endif %}" href="{{ message_list }}"><i data-feather="mail"></i><span class="lan-6">Сообщения</span></a></li>
+                {% endif %}
+
+                {% if perms.referral.view_raffle %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == raffle_list %}active{% endif %}" href="{{ raffle_list }}"><i data-feather="award"></i><span class="lan-6">Розыгрыши</span></a></li>
+                {% endif %}
+                {% if perms.referral.view_present %}
+                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav
+                     {% if request.path == present_list %}active{% endif %}" href="{{ present_list }}"><i data-feather="gift"></i><span class="lan-6">Подарки</span></a></li>
+                {% endif %}
+
+                </ul>
+              {% endif %}
+              </div>
+              <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
+            </nav>
+          </div>
+        </div>
+        <!-- Page Sidebar Ends-->
+        <div class="page-body">
+            {% block content %}
+                <h1>No content</h1>
+            {% endblock content %}
+        </div>
+        <!-- footer start-->
+        <footer class="footer">
+        </footer>
+      </div>
+    </div>
+
+    <!-- latest jquery-->
+    <script src="{% static 'cabinet/js/jquery-3.5.1.min.js' %}"></script>
+    <!-- Bootstrap js-->
+    <script src=" {% static 'cabinet/js/bootstrap/bootstrap.bundle.min.js' %} "></script>
+    <!-- feather icon js-->
+    <script src="{% static 'cabinet/js/icons/feather-icon/feather.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/icons/feather-icon/feather-icon.js' %}"></script>
+    <!-- scrollbar js-->
+    <script src="{% static 'cabinet/js/scrollbar/simplebar.js' %}"></script>
+    <script src="{% static 'cabinet/js/scrollbar/custom.js' %}"></script>
+    <!-- Sidebar jquery-->
+    <script src=" {% static 'cabinet/js/config.js' %}"></script>
+    <!-- Plugins JS start-->
+    <script src="{% static 'cabinet/js/sidebar-menu.js' %}"></script>
+    <script src="{% static 'cabinet/js/moment.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/chartist/chartist.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/chartist/chartist-plugin-tooltip.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/knob/knob.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/knob/knob-chart.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/apex-chart/apex-chart.js' %}"></script>
+    <script src="{% static 'cabinet/js/chart/apex-chart/stock-prices.js' %}"></script>
+    <script src="{% static 'cabinet/js/notify/bootstrap-notify.min.js' %}"></script>
+
+{#    <script src="{% static 'cabinet/js/date-time-picker/tempusdominus-bootstrap-4.min.js' %}"></script>#}
+{#    <script src="{% static 'cabinet/js/datepicker/date-picker/datepicker.js' %}"></script>#}
+{#    <script src="{% static 'cabinet/js/datepicker/date-picker/datepicker.en.js' %}"></script>#}
+{#    <script src="{% static 'cabinet/js/datepicker/date-picker/datepicker.custom.js' %}"></script>#}
+
+
+    <!-- Plugins JS Ends-->
+    <script src="{% static 'cabinet/js/counter/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/datepicker/datetime-picker/jquery.datetimepicker.full.min.js' %}"></script>
+    <script>
+        $('.datetimeinput').datetimepicker({
+            format:'d.m.Y H:i:s',
+        })
+    </script>
+    <script src="{% static 'cabinet/js/time-picker/highlight.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/time-picker/jquery-clockpicker.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/time-picker/clockpicker.js' %}"></script>
+
+
+
+
+    <!-- Theme js-->
+    <script src="{% static 'cabinet/js/script.js' %}"></script>
+    <script src="{% static 'cabinet/js/forms/datetime_autocomplete_off.js' %}"></script>
+{#     <script src="{% static 'cabinet/js/theme-customizer/customizer.js' %}"></script>#}
+    <!-- login js-->
+    <!-- Plugin used-->
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                var notify = $.notify('<i class="fa fa-bell-o"></i>{{ message }}', {
+                type: 'theme',
+                allow_dismiss: true,
+                delay: 3000,
+                showProgressbar: true,
+                timer: 300,
+                animate:{
+                    enter:'animated fadeInDown',
+                    exit:'animated fadeOutUp'
+                }
+            });
+            {% endfor %}
+        </script>
+    {% endif %}
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
+  </body>
+</html>

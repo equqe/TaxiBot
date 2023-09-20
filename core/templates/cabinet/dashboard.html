@@ -1,0 +1,234 @@
+{% extends "cabinet/layout/base.html" %}
+{% load static %}
+
+
+{% block title %}
+  <title>ТаксиБер - Панель управления</title>
+{% endblock title %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+{% endblock extra_head %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-6">
+          <h3>Панель администратора</h3>
+        </div>
+        <div class="col-6">
+          {% include "cabinet/layout/breadcrumb.html" with item1="Меню администратора" item2="Панель управления" %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container-fluid starts-->
+  <div class="container-fluid">
+    <!-- Chart widget top Start-->
+    <div class="row">
+      <div class="col-xl-4 col-md-12 box-col-12">
+        <div class="card o-hidden">
+          <div class="chart-widget-top">
+            <div class="row card-body">
+              <div class="col-5">
+                <h6 class="f-w-600 font-primary">Клиенты</h6><span class="num">
+              </div>
+              <div class="col-7 text-end">
+                <h4 class="num total-value"><span class="counter">{{ clients_count }}</span></h4>
+              </div>
+            </div>
+            <div>
+              <div id="chart-widget1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12 box-col-12">
+        <div class="card o-hidden">
+          <div class="chart-widget-top">
+            <div class="row card-body">
+              <div class="col-7">
+                <h6 class="f-w-600 font-secondary">Водители</h6>
+              </div>
+              <div class="col-5 text-end">
+                <h4 class="num total-value counter">{{ drivers_count }}</h4>
+              </div>
+            </div>
+            <div id="chart-widget2">
+              <div class="flot-chart-placeholder" id="chart-widget-top-second"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12 box-col-12">
+        <div class="card o-hidden">
+          <div class="chart-widget-top">
+            <div class="row card-body">
+              <div class="col-8">
+                <h6 class="f-w-600 font-success">Поездки</h6>
+              </div>
+              <div class="col-4 text-end">
+                <h4 class="num total-value"><span class="counter">{{ orders_count }}</span></h4>
+              </div>
+            </div>
+            <div id="chart-widget3">
+              <div class="flot-chart-placeholder" id="chart-widget-top-third"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-12 xl-100 box-col-12">
+        <div class="card">
+          <div class="card-header card-no-border">
+            <h5>Местоположение водителей</h5>
+          </div>
+          <div class="card-body pt-0">
+            <div class="dash-map">
+              <div id="map"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="col-xl-12 xl-100 dashboard-sec box-col-12">
+        <div class="card earning-card">
+          <div class="card-body p-0">
+            <div class="row m-0">
+              <div class="col-xl-3 earning-content p-0">
+                <div class="row m-0 chart-left">
+                  <div data-key='main' class="col-xl-12 p-0 left_side_earning">
+                    <h5>Статистика</h5>
+                    <p id='name' data-key='name' class="font-roboto">Последний месяц</p>
+                  </div>
+                  <div data-key="money" class="col-xl-12 p-0 left_side_earning">
+                    <h5 id="value">0</h5>
+                    <p id='name' class="font-roboto">Заработано в этом месяце</p>
+                  </div>
+                  <div data-key="distance" class="col-xl-12 p-0 left_side_earning">
+                    <h5 id="value">0</h5>
+                    <p id="name" class="font-roboto">Дистанция в этом месяце</p>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-xl-9 p-0">
+                <div class="chart-right">
+                  <div class="row m-0 p-tb">
+                    <div class="col-xl-8 col-md-8 col-sm-8 col-12 p-0">
+                      <div class="inner-top-left">
+                        <ul class="d-flex list-unstyled">
+                            <li id="current-chart--pick-mode" data-mode="week">Неделя</li>
+                          <li id="current-chart--pick-mode" data-mode="month" class="active">Месяц</li>
+                          <li id="current-chart--pick-mode" data-mode="year">Год</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-4 col-12 p-0 justify-content-end">
+                      <div class="inner-top-right">
+                        <ul class="d-flex list-unstyled justify-content-end">
+                          <li>Прибыль</li>
+                            <li style="display: none;">Расстояние</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card-body p-0">
+                        <div class="current-sale-container">
+                          <div id="chart-currently"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row border-top m-0">
+                  <div class="col-xl-4 ps-0 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left"><i class="icofont icofont-crown"></i></div>
+                      <div class="media-body">
+                        <h6>Бонусы</h6>
+                        <p>{{ request.user.balance.bonuses }} шт.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left bg-secondary"><i class="icofont icofont-heart-alt"></i></div>
+                      <div class="media-body">
+                        <h6>Бонусные дни</h6>
+                        <p>{{ request.user.balance.free_days }} шт.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-12 pe-0">
+                    <div class="media p-0">
+                      <div class="media-left"><i class="icofont icofont-cur-dollar"></i></div>
+                      <div class="media-body">
+                        <h6>Баланс</h6>
+                        <p>{{ request.user.balance.money }} ₽</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- Chart widget top Ends-->
+    
+  </div>
+  <!-- Container-fluid Ends-->
+{% endblock content %}
+
+{% block extra_scripts %}
+  <!-- latest jquery-->
+    {{ clients_data|json_script:"clients_data" }}
+    {{ drivers_data|json_script:"drivers_data" }}
+    {{ orders_data|json_script:"orders_data" }}
+    <script type="text/javascript">
+      const clients = JSON.parse(document.querySelector('#clients_data').textContent);
+      const drivers = JSON.parse(document.querySelector('#drivers_data').textContent);
+      const orders = JSON.parse(document.querySelector('#orders_data').textContent);
+    </script>
+    <!-- Sidebar jquery-->
+    <script src="{% static 'cabinet/js/config.js' %}"></script>
+    <script src="{% static 'cabinet/js/distance.js' %}"></script>
+    <!-- Plugins JS start-->
+    <script src="{% static 'cabinet/js/prism/prism.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/clipboard/clipboard.min.js' %}"></script>
+    <script src="{% static 'cabinet/js/custom-card/custom-card.js' %}"></script>
+    <script src="{% static 'cabinet/js/pages/driver/utils.js' %}" ></script>
+    <script src="{% static 'cabinet/js/pages/admin/utils.js' %}" ></script>
+    <script src="{% static 'cabinet/js/pages/admin/admin-panel.js' %}"></script>
+    <script src="{% static 'cabinet/js/tooltip-init.js' %}"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="{% static "cabinet/js/leaflet.js" %}"></script>
+    <script type="text/javascript">
+
+    // Карта для отображения геопозиции всех водителей в системе (оффлайн и онлайн)
+      var base_location = [drivers[0].location.latitude, drivers[0].location.longitude]
+     var map = L.map('map').setView(base_location, 1);
+     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a> contributors, ' +
+              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 17,
+            minZoom: 1
+          }).addTo(map);
+
+     drivers.forEach(user => {
+      var user_location = user.location?[user.location.latitude, user.location.longitude]:null
+      if (user_location) L.marker(user_location).addTo(map);
+     })
+
+
+    </script>
+{% endblock extra_scripts %}

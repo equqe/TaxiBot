@@ -1,0 +1,259 @@
+{% extends 'cabinet/layout/base.html' %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+{% endblock extra_head %}
+
+{% block content %}
+    <div class="container-fluid">
+            <div class="page-title">
+              <div class="row">
+                <div class="col-6">
+                  <h3>Кабинет</h3>
+                </div>
+                <div class="col-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_cabinet }}"><i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Меню водителя</li>
+                    <li class="breadcrumb-item active">Кабинет</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+    <div class="row size-column">
+      <div class="col-xl-12 box-col-12 xl-100">
+        <div class="row dash-chart">
+          <div class="col-xl-4 box-col-4 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-header card-no-border">
+               
+                <div class="media">
+                  <div class="media-body">
+                    <p><span class="f-w-500 font-roboto">Рабочих часов в этом месяце</span></p>
+                    <h4 class="f-w-500 mb-0 f-20"><span id='chart-options1' class="counter">0</span></h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="media">
+                  <div class="media-body">
+                    <div class="profit-card">
+                      <div id="spaline-chart"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 box-col-4 col-md-12">
+            <div class="card o-hidden">
+              <div class="card-header card-no-border">
+                
+                <div class="media">
+                  <div class="media-body">
+                    <p><span class="f-w-500 font-roboto">Поездки</span></p>
+                    <h4 class="f-w-500 mb-0 f-20 counter">{{ request.user.rides.finished.count }}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="monthly-visit">
+                  <div id="column-chart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="col-xl-4 box-col-4 col-md-12">
+                <div class="card total-users">
+                  <div class="card-header card-no-border">
+                    <h5>Рейтинг</h5>
+                  </div>
+                  <div class="card-body pt-0">
+                    <div class="apex-chart-container goal-status text-center row">
+                      <div class="rate-card col-xl-12">
+                        <div class="goal-chart">
+                          <div id="riskfactorchart"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+        </div>
+      </div>
+      <div class="col-xl-8 xl-100 dashboard-sec box-col-12">
+        <div class="card earning-card">
+          <div class="card-body p-0">
+            <div class="row m-0">
+              <div class="col-xl-3 earning-content p-0">
+                <div class="row m-0 chart-left">
+                  <div data-key='main' class="col-xl-12 p-0 left_side_earning">
+                    <h5>Статистика</h5>
+                    <p id='name' data-key='name' class="font-roboto">Последний месяц</p>
+                  </div>
+                  <div data-key="money" class="col-xl-12 p-0 left_side_earning">
+                    <h5 id="value">0</h5>
+                    <p id='name' class="font-roboto">Заработано в этом месяце</p>
+                  </div>
+                  <div data-key="distance" class="col-xl-12 p-0 left_side_earning">
+                    <h5 id="value">0</h5>
+                    <p id="name" class="font-roboto">Дистанция в этом месяце</p>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-xl-9 p-0">
+                <div class="chart-right">
+                  <div class="row m-0 p-tb">
+                    <div class="col-xl-8 col-md-8 col-sm-8 col-12 p-0">
+                      <div class="inner-top-left">
+                        <ul class="d-flex list-unstyled">
+                            <li id="current-chart--pick-mode" data-mode="week">Неделя</li>
+                          <li id="current-chart--pick-mode" data-mode="month" class="active">Месяц</li>
+                          <li id="current-chart--pick-mode" data-mode="year">Год</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-4 col-12 p-0 justify-content-end">
+                      <div class="inner-top-right">
+                        <ul class="d-flex list-unstyled justify-content-end">
+                          <li>Прибыль</li>
+                          <li style="display: none;">Расстояние</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="card-body p-0">
+                        <div class="current-sale-container">
+                          <div id="chart-currently"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row border-top m-0">
+                  <div class="col-xl-4 ps-0 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left"><i class="icofont icofont-crown"></i></div>
+                      <div class="media-body">
+                        <h6>Бонусы</h6>
+                        <p>{{ request.user.balance.bonuses }} шт.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-6 col-sm-6">
+                    <div class="media p-0">
+                      <div class="media-left bg-secondary"><i class="icofont icofont-heart-alt"></i></div>
+                      <div class="media-body">
+                        <h6>Бонусные дни</h6>
+                        <p>{{ request.user.balance.free_days }} шт.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-md-12 pe-0">
+                    <div class="media p-0">
+                      <div class="media-left"><i class="icofont icofont-cur-dollar"></i></div>
+                      <div class="media-body">
+                        <h6>Баланс</h6>
+                        <p>{{ request.user.balance.money }} ₽</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 xl-50 box-col-12">
+        <div class="card">
+          <div class="card-header card-no-border">
+            <h5>Местоположение</h5>
+          </div>
+          <div class="card-body pt-0">
+            <div class="dash-map">
+              <div id="map"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-xl-12 xl-100 box-col-12">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="best-seller-table responsive-tbl">
+                  <div class="item">
+                    <div class="table-responsive product-list">
+                      <table class="table table-bordernone">
+                        <thead>
+                          <tr>
+                            <th class="f-22">Отзывы о вас</th>
+                            <th>Дата</th>
+                            <th>Поездка</th>
+                            <th>Количество звезд</th>
+                            <th class="text-end">Текст</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for ride in request.user.rides.with_review %}
+                          <tr>
+                            <td>
+                               {% if ride.client.get_photo_url %}
+                                    <div class="d-inline-block align-middle"><img class="img-40 m-r-15 rounded-circle align-top" src="{{ ride.client.get_photo_url }}" alt="">
+                                        <div class="status-circle bg-primary"></div>
+                               {% endif %}
+                                <div class="d-inline-block"><span>{{ ride.client.first_name }}</span>
+                                  <p class="font-roboto">{{ ride.address }}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td>{{ ride.start_date|date }}</td>
+                            <td><a href="{{ ride.get_absolute_url }}">{{ ride }}</a></td>
+                            <td>{{ ride.review.get_stars_display }}</td>
+                            <td class="text-end">{{ ride.review.text|default_if_none:'Отсутствует' }}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Container-fluid Ends-->
+{% endblock content %}
+
+{% block extra_scripts %}
+    <script src="{% static 'cabinet/js/distance.js' %}"></script>
+    <script src="{% static 'cabinet/js/moment.min.js' %}"></script>
+  {{user_data|json_script:"user_data"}}
+  <script>
+      // Load data
+    const user = JSON.parse(document.querySelector('#user_data').textContent);
+
+  </script>
+  <script src="{% static "cabinet/js/leaflet.js" %}"></script>
+
+  <script src="{% static 'cabinet/js/pages/driver/utils.js' %}"></script>
+  <script src="{% static 'cabinet/js/pages/driver/index.js' %}"></script>
+
+{% endblock %}
