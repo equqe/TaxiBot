@@ -6,11 +6,6 @@ from django.urls import include, path, reverse
 from django.views.generic import RedirectView
 
 
-def error_404_view(request: HttpRequest, exception=None):
-    return HttpResponse(
-        '<h1>Страница не найдена</h1><br><a href="%s">Кабинет</a>'
-        % reverse("cabinet:index")
-    )
 
 
 def error_403_view(request: HttpRequest, exception=None):
@@ -32,5 +27,4 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
-handler404 = error_404_view
 handler403 = error_403_view
