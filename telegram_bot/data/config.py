@@ -22,10 +22,7 @@ WEB_BOT_URL = env.str("WEB_BOT_URL")
 
 # webhook settings
 CORE_TOKEN = env.str("CORE_TOKEN")
-if DEBUG:
-    WEBHOOK_HOST = env.str("WEBHOOK_HOST")
-else:
-    WEBHOOK_HOST = env.str("WEBHOOK_HOST_TEST")
+WEBHOOK_HOST = env.str("WEBHOOK_HOST")
 # if DEBUG:
 #     WEBHOOK_PATH = '/'+ CORE_TOKEN + '/'
 # else:

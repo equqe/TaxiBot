@@ -1,0 +1,169 @@
+[2023-09-21 18:55:41,799: INFO/MainProcess] Connected to redis://:**@redis:6379/3
+[2023-09-21 18:55:41,808: INFO/MainProcess] mingle: searching for neighbors
+[2023-09-21 18:55:42,822: INFO/MainProcess] mingle: all alone
+[2023-09-21 18:55:42,831: WARNING/MainProcess] /usr/local/lib/python3.8/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+[2023-09-21 18:55:42,831: INFO/MainProcess] celery@0e2994f6f865 ready.
+[2023-09-21 18:55:44,043: INFO/Beat] beat: Starting...
+[2023-09-21 18:55:44,054: ERROR/Beat] Process Beat
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/kombu/utils/objects.py", line 41, in __get__
+    return obj.__dict__[self.__name__]
+KeyError: 'scheduler'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 200, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/postgresql/base.py", line 187, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "/usr/local/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: could not translate host name "db" to address: Temporary failure in name resolution
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/billiard/process.py", line 327, in _bootstrap
+    self.run()
+  File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 703, in run
+    self.service.start(embedded_process=True)
+  File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 618, in start
+    humanize_seconds(self.scheduler.max_interval))
+  File "/usr/local/lib/python3.8/site-packages/kombu/utils/objects.py", line 43, in __get__
+    value = obj.__dict__[self.__name__] = self.__get(obj)
+  File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 662, in scheduler
+    return self.get_scheduler()
+  File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 653, in get_scheduler
+    return symbol_by_name(self.scheduler_cls, aliases=aliases)(
+  File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 231, in __init__
+    Scheduler.__init__(self, *args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 253, in __init__
+    self.setup_schedule()
+  File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 239, in setup_schedule
+    self.install_default_entries(self.schedule)
+  File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 361, in schedule
+    self._schedule = self.all_as_schedule()
+  File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 245, in all_as_schedule
+    for model in self.Model.objects.enabled():
+  File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 280, in __iter__
+    self._fetch_all()
+  File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "/usr/local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1167, in execute_sql
+    cursor = self.connection.cursor()
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 259, in cursor
+    return self._cursor()
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 235, in _cursor
+    self.ensure_connection()
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.8/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 200, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.8/site-packages/django/db/backends/postgresql/base.py", line 187, in get_new_connection
+    connection = Database.connect(**conn_params)
+  File "/usr/local/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+django.db.utils.OperationalError: could not translate host name "db" to address: Temporary failure in name resolution
+
+[2023-09-21 18:55:44,057: WARNING/Beat] Process Beat:
+[2023-09-21 18:55:44,058: WARNING/Beat] Traceback (most recent call last):
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/kombu/utils/objects.py", line 41, in __get__
+    return obj.__dict__[self.__name__]
+[2023-09-21 18:55:44,058: WARNING/Beat] KeyError: 'scheduler'
+[2023-09-21 18:55:44,058: WARNING/Beat] During handling of the above exception, another exception occurred:
+[2023-09-21 18:55:44,058: WARNING/Beat] Traceback (most recent call last):
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 200, in connect
+    self.connection = self.get_new_connection(conn_params)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/postgresql/base.py", line 187, in get_new_connection
+    connection = Database.connect(**conn_params)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+[2023-09-21 18:55:44,058: WARNING/Beat] psycopg2.OperationalError: could not translate host name "db" to address: Temporary failure in name resolution
+[2023-09-21 18:55:44,058: WARNING/Beat] The above exception was the direct cause of the following exception:
+[2023-09-21 18:55:44,058: WARNING/Beat] Traceback (most recent call last):
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/billiard/process.py", line 327, in _bootstrap
+    self.run()
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 703, in run
+    self.service.start(embedded_process=True)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 618, in start
+    humanize_seconds(self.scheduler.max_interval))
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/kombu/utils/objects.py", line 43, in __get__
+    value = obj.__dict__[self.__name__] = self.__get(obj)
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 662, in scheduler
+    return self.get_scheduler()
+[2023-09-21 18:55:44,058: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 653, in get_scheduler
+    return symbol_by_name(self.scheduler_cls, aliases=aliases)(
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 231, in __init__
+    Scheduler.__init__(self, *args, **kwargs)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/celery/beat.py", line 253, in __init__
+    self.setup_schedule()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 239, in setup_schedule
+    self.install_default_entries(self.schedule)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 361, in schedule
+    self._schedule = self.all_as_schedule()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django_celery_beat/schedulers.py", line 245, in all_as_schedule
+    for model in self.Model.objects.enabled():
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 280, in __iter__
+    self._fetch_all()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/models/query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1167, in execute_sql
+    cursor = self.connection.cursor()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 259, in cursor
+    return self._cursor()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 235, in _cursor
+    self.ensure_connection()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 219, in ensure_connection
+    self.connect()
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/base/base.py", line 200, in connect
+    self.connection = self.get_new_connection(conn_params)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/utils/asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/django/db/backends/postgresql/base.py", line 187, in get_new_connection
+    connection = Database.connect(**conn_params)
+[2023-09-21 18:55:44,059: WARNING/Beat] File "/usr/local/lib/python3.8/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+[2023-09-21 18:55:44,060: WARNING/Beat] django.db.utils.OperationalError: could not translate host name "db" to address: Temporary failure in name resolution
