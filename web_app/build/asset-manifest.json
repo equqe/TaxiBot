@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.32c1acd9.css",
-    "main.js": "/static/js/main.4f1b3fc9.js",
-    "static/js/426.a8732601.chunk.js": "/static/js/426.a8732601.chunk.js",
+    "main.css": "/static/css/main.2f77137c.css",
+    "main.js": "/static/js/main.5371e851.js",
+    "static/js/249.c68a3a52.chunk.js": "/static/js/249.c68a3a52.chunk.js",
     "static/media/gray-location.svg": "/static/media/gray-location.0bdfa95c5d27e5fba4bff05400dc1ee4.svg",
     "static/media/red-location.svg": "/static/media/red-location.ee2c405a21d06e6a196e822d4ceb0600.svg",
     "index.html": "/index.html",
     "static/media/driver-location-icon.svg": "/static/media/driver-location-icon.cef701a9b8ce847d00ca3d5e0112a503.svg",
     "static/media/taxi-logo.svg": "/static/media/taxi-logo.3eee7b43d22fe977d4bbeeb7b7f537a5.svg",
     "static/media/location-marker.svg": "/static/media/location-marker.5a5336803e75612e39ac336ee9f1f6e2.svg",
-    "main.32c1acd9.css.map": "/static/css/main.32c1acd9.css.map",
-    "main.4f1b3fc9.js.map": "/static/js/main.4f1b3fc9.js.map",
-    "426.a8732601.chunk.js.map": "/static/js/426.a8732601.chunk.js.map"
+    "main.2f77137c.css.map": "/static/css/main.2f77137c.css.map",
+    "main.5371e851.js.map": "/static/js/main.5371e851.js.map",
+    "249.c68a3a52.chunk.js.map": "/static/js/249.c68a3a52.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.32c1acd9.css",
-    "static/js/main.4f1b3fc9.js"
+    "static/css/main.2f77137c.css",
+    "static/js/main.5371e851.js"
   ]
 }
