@@ -1,7 +1,7 @@
 name: remote ssh command
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 jobs:
 
   build:
@@ -16,6 +16,6 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          git -C ${{ secrets.GIT_FOLDER }} pull origin main
+          git -C ${{ secrets.GIT_FOLDER }} pull origin master
           docker-compose -f ${{ secrets.COMPOSE_PATH }} down
           docker-compose -f ${{ secrets.COMPOSE_PATH }} up -d --build
