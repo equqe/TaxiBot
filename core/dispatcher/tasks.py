@@ -1,8 +1,10 @@
 from datetime import timedelta
+from celery import shared_task
 
 import requests
 from django.utils import timezone
 from django.conf import settings as config
+from cabinet.models import Driver
 from core import celery_app
 from .models import OrderRevision
 from .settings import DRIVERS_NOT_FOUND, SEARCH_NEAREST_DRIVERS_RADIUS
@@ -14,6 +16,13 @@ from .serializers import OrderRevisionNotifySerializer
 def setup_periodic_tasks(sender: celery_app, **kwargs):
     # Устанавливает регулярные задачи
     sender.add_periodic_task(30.0, check_revision_orders.s())
+
+
+@shared_task
+def driver_not_accepted_clear(driver_id):
+    driver = Driver.objects.get(id=driver_id)
+    driver.count_not_accepted = 0
+    driver.save()
 
 
 @celery_app.task

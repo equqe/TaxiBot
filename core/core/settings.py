@@ -189,8 +189,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-GDAL_LIBRARY_PATH = '/usr/lib/ogdi/4.1/libgdal.so'
-
 #
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

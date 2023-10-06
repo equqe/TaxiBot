@@ -1,4 +1,5 @@
 import asyncio
+import pprint
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
@@ -35,6 +36,9 @@ from models.dispatcher import (
     Order,
 )
 from states import DriverMenu
+from states.driver import OrderStateDriver
+from states.order import OrderState
+from utils.geolocator import getDistanceBetweenPointsNew
 from .order import open_order, update_order_in_storage
 
 
@@ -134,7 +138,6 @@ async def pick_user_location(message: types.Message, state: FSMContext = None):
     """
     Принимает геопозицию водителя
     """
-    print(message.location)
     text = t.TAKE_GEO_TEXT
 
     if not message.location.live_period:
@@ -149,12 +152,33 @@ async def pick_user_location(message: types.Message, state: FSMContext = None):
 async def update_live_location_handler(
         message: types.Message, state: FSMContext = None
 ):
+
     await update_driver_location(message, state)
 
 
+async def update_driver_location_send_client(chat_id: int):
+    """
+    Проверяет местонахождение водителя и пользователя
+    """
+    location: Location = await location_storage.get_data(key=str(chat_id))
+    obj = await core.get_active_ride(driver_chat_id=chat_id)
+    distance = getDistanceBetweenPointsNew(latitude1=location.latitude, longitude1=location.longitude,
+                                           latitude2=obj.start_location.latitude, longitude2=obj.start_location.longitude)
+    if distance <= 0.3:
+        user_id = obj.client.telegram_data.chat_id
+        await bot.send_message(chat_id=user_id, text="Водитель подъезжает")
+        
+        await location_storage.set_data(key=f'user_order_driver_chat_{chat_id}_is_sending', data=True)
+
 async def update_driver_location_in_storage(chat_id: int, location: Location):
     await location_storage.set_data(key=str(chat_id), data=location)
-
+    
+    try:
+        is_sending = await location_storage.get_data(f'user_order_driver_chat_{chat_id}_is_sending')
+    except TypeError:
+        is_sending = False
+    if not is_sending:
+        await update_driver_location_send_client(chat_id)
 
 async def update_driver_location(message: types.Message, state: FSMContext = None):
     print("Обновление геопозиции: ", message.location)
@@ -172,7 +196,10 @@ async def new_order_callback_handler(
     """
     if callback_data[CB_ACTION] == DECLINE_ORDER:
         # Если водитель нажал "Отказаться от заказа"
-        return await callback.message.delete()
+        await callback.message.delete()
+        result = await core.analytics_driver_order_not_approved(order_id=int(callback_data[CB_ORDER_ID]),
+                                                                chat_id=callback.from_user.id)
+        await callback.message(str(result))
 
     elif callback_data[CB_ACTION] == ACCEPT_ORDER:
         # Если водитель нажал "Принять заказ"
@@ -196,6 +223,7 @@ async def new_order_callback_handler(
             chat_id=client_chat_id,
             pre_text=f"Водитель найден! К вам едет {order.driver.first_name}\n\n",
         )
+        
         # Открываем меню заказа для водителя
         await open_ride(state=state, base_message=callback.message)
 
@@ -240,6 +268,9 @@ async def open_ride(
             text, reply_markup=await order_driver_keyboard(order=order)
         )
 
+    await state.set_state(OrderStateDriver.order_start)
+    await state.update_data(order_start=dict(latitude=order.start_location.latitude,
+                                             longitude=order.start_location.longitude))
     # Если нужно отправить геопозицию клиента
     if send_client_location:
         start_location_message = await ride_message.reply_location(
@@ -284,6 +315,7 @@ async def update_order_status_callback_handler(
     await callback.answer(t.ORDER_STATUS_CHANGED)
     if status == DRIVER_IS_WAITING:
         # Если водитель ожидает
+        await location_storage.reset(f'dl:user_order_driver_chat_{callback.from_user.id}_is_sending')
         settings = await core.get_all_settings()
         settings = settings["dispatcher_settings"]
         client_pre_text = (

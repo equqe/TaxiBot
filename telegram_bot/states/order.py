@@ -30,3 +30,13 @@ class OrderReviewState(StatesGroup):
 
     pick_stars = State()
     pick_text = State()
+
+
+class OrderSity(StatesGroup):
+    """
+    Сохранение города поездки
+    """
+
+    sity = State()
+
+

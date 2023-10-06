@@ -47,8 +47,8 @@ class Wallet(BaseWallet):
 
 
 class WalletMock:
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, number, *args, **kwargs):
+        self.number = number
 
     def set_webhook(self, *args, **kwargs):
         pass

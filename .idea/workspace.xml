@@ -4,7 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c9a2e8eb-ccaa-49dc-8281-0983506abd38" name="Changes" comment="" />
+    <list default="true" id="c9a2e8eb-ccaa-49dc-8281-0983506abd38" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/.env" beforeDir="false" afterPath="$PROJECT_DIR$/core/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/core/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/api/authentication.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/api/authentication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/core/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/core/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/logs/all.log" beforeDir="false" afterPath="$PROJECT_DIR$/core/logs/all.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/logs/celery_worker.log" beforeDir="false" afterPath="$PROJECT_DIR$/core/logs/celery_worker.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/.env" beforeDir="false" afterPath="$PROJECT_DIR$/database/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/base/1/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/base/1/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/base/16384/pg_internal.init" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/base/16385/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/base/16385/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/base/5/pg_internal.init" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/global/1260" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/global/1260" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/global/1260_vm" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/global/1260_vm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/global/pg_control" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/global/pg_control" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/global/pg_internal.init" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/global/pg_internal.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/pg_hba.conf" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/pg_hba.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/pg_wal/000000010000000000000004" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/pg_wal/000000010000000000000004" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/pg_xact/0000" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/pg_xact/0000" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data/postmaster.pid" beforeDir="false" afterPath="$PROJECT_DIR$/database/data/postmaster.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redis/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/redis/dump.rdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/.env" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/api/orders.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/api/orders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/data/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/handlers/users/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/handlers/users/order.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/keyboards/default/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/keyboards/default/main_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/telegram_bot/utils/misc/qiwi_wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/telegram_bot/utils/misc/qiwi_wallet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/web_app/.env" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,20 +52,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/thepr/PycharmProjects/taxiber-main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/gagtain/TaxiBot/core",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -46,6 +77,7 @@
       <workItem from="1695203266879" duration="23060000" />
       <workItem from="1695379154225" duration="903000" />
       <workItem from="1695407199904" duration="5406000" />
+      <workItem from="1696082365006" duration="1294000" />
     </task>
     <servers />
   </component>

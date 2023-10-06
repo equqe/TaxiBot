@@ -145,8 +145,8 @@ async def on_startup(dispatcher):
     # print("End set webhook")
     await core.start_session()
     # await on_startup_notify(dispatcher)
-    # loop = asyncio.get_running_loop()
-    # loop.create_task(update_user_locations_task())
+    loop = asyncio.get_running_loop()
+    loop.create_task(update_user_locations_task())
 
 
 async def on_shutdown(dispatcher):

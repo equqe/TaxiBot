@@ -17,7 +17,6 @@ from data.config import (
 from utils.aioredis_storage import RedisStorage
 from utils.misc.qiwi_wallet import Wallet, WalletMock
 from utils.misc.upgraded_storage import RedisPickleFSMStorage
-
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 FSMStorage = RedisPickleFSMStorage(
     REDIS_NAME, REDIS_PORT, REDIS_FSM_DB, prefix="fsm", password=REDIS_PASSWORD
@@ -38,4 +37,4 @@ location_storage = RedisStorage(
 if not config.DEBUG:
     qiwi = Wallet(token=QIWI_TOKEN, number=QIWI_PHONE_NUMBER)
 else:
-    qiwi = WalletMock()
+    qiwi = WalletMock(number=123)

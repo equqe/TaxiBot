@@ -24,8 +24,7 @@ async def main_menu_keyboard(user: User) -> ReplyKeyboardMarkup:
     if user.phone_number:
         keyboard.add(
             KeyboardButton(
-                text=ORDER_A_TAXI,
-                web_app=WebAppInfo(url=WEB_BOT_URL + "?telegram_auth_token=" + user.telegram_auth_token),
+                text=ORDER_A_TAXI
             )
         )
     else:
