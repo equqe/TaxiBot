@@ -25,6 +25,8 @@ DRIVER_CABINET = "🗂 Кабинет водителя"
 OPEN_DRIVER_CABINET = "🌐 Открыть личный кабинет"
 TOP_UP_BALANCE = "➕ Пополнить баланс"
 ADD_PHONE_NUMBER = "📲 Зарегистрироваться"
+CONTACT_DATA = "Контактные данные"
+
 
 WRITE_ADDRESS = "📝 Ввести адрес"
 

@@ -115,7 +115,7 @@ class OrderAPIMethods:
     async def analytics_driver_order_not_approved(self, order_id: int, chat_id: int) -> bool:
         json_data = {"chat_id": int(chat_id)}
         response = await self.session.post(self.base_url() + f"analytics/driver/order/{order_id}", json=json_data)
-        print(response, 'dadada')
+        print(response, 'dadada', response.status)
         # response = await post_request(
         #     session=self.session,
         #     url=self.base_url() + f"analytics/driver/order/{order_id}",

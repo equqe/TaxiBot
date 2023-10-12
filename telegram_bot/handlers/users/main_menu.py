@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import Command
-from data.buttons import ADD_PHONE_NUMBER
+from data.buttons import ADD_PHONE_NUMBER, CONTACT_DATA
 from data.texts import OPEN_MAIN_MENU, SEND_PHONE, WRONG_PHONE
 from keyboards.default import main_menu_keyboard
 from keyboards.default.request_data import request_data_keyboard
@@ -42,6 +42,10 @@ async def phone_number_handler(message: types.Message):
         SEND_PHONE, reply_markup=await request_data_keyboard(buttons=["phone"])
     )
 
+
+@dp.message_handler(text=CONTACT_DATA)
+async def phone_number_handler(message: types.Message):
+    await message.reply_document(open("data/static/contact_data.doc", 'rb'))
 
 @dp.message_handler(
     state=UpdatePhoneNumber.is_active, content_types=types.ContentTypes.ANY
