@@ -428,13 +428,16 @@ class DriverAnalyticsOrderAPIView(APIView):
                 except:
                     minute = 5
                     count = 5
-                user.driver.count_not_accepted += 1
-                if count >= user.driver.count_not_accepted:
+                if count >= user.driver.count_not_accepted + 1:
                     date = datetime.datetime.now() + datetime.timedelta(minutes=minute)
                     
                     user.driver.time_blocked_message_order = date
                     date_str = date.strftime('%m/%d/%Y, %H:%M:%S')
-                    data = f"Вы заблокированны до {date_str}"
+                    data = {"message":f"Вы заблокированны до {date_str}", "is_block": True}
+                else:
+                    
+                    user.driver.count_not_accepted += 1
+                    data = {"message":f"count not accepted: {user.driver.count_not_accepted}", "is_block": False}
                 user.driver.order_not_accepted.add(order)
                 user.driver.save()
                 driver_not_accepted_clear.apply_async(kwargs={"driver_id": user.driver.id}, countdown= minute * 60)
