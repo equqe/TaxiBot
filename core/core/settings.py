@@ -1,24 +1,24 @@
+import os
 from pathlib import Path
+from dotenv import load_dotenv, find_dotenv
 
-from environs import Env
+load_dotenv(find_dotenv())
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = Env()
-env.read_env()
 
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = env.bool("DEBUG")
-BASE_URL = env("BASE_URL")
+DEBUG = os.environ.get("DEBUG")
+BASE_URL = os.environ.get("BASE_URL")
 
-ENVIROMENT_CORE_TOKEN = env("CORE_TOKEN")
+ENVIROMENT_CORE_TOKEN = os.environ.get("CORE_TOKEN")
 TELEGRAM_BOT_WEBHOOK_URL = (
-    env.str("TELEGRAM_BOT_WEBHOOK_URL") + ENVIROMENT_CORE_TOKEN + "/"
+        os.environ.get("TELEGRAM_BOT_WEBHOOK_URL") + str(ENVIROMENT_CORE_TOKEN) + "/"
 )
 TELEGRAM_BOT_USERNAME = 'TestAssistant1Robot'
 # TELEGRAM_BOT_USERNAME = env.str("TELEGRAM_BOT_USERNAME")
-DADATA_TOKEN = env("DADATA_TOKEN")
-LANDING_ENABLED = env.bool("LANDING_ENABLED")
+DADATA_TOKEN = os.environ.get("DADATA_TOKEN")
+LANDING_ENABLED = os.environ.get("LANDING_ENABLED")
 
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
@@ -148,18 +148,16 @@ REST_FRAMEWORK = {
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": env("DATABASE_NAME"),
-        "USER": env("DATABASE_USER"),
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
+        "NAME": os.environ.get("DATABASE_NAME"),
+        "USER": os.environ.get("DATABASE_USER"),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
+        "HOST": os.environ.get("DATABASE_HOST"),
+        "PORT": os.environ.get("DATABASE_PORT"),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -195,7 +193,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 STATIC_URL = "/static/"
 if DEBUG:
     STATIC_ROOT = BASE_DIR.joinpath("static")
@@ -204,7 +201,6 @@ else:
     STATIC_ROOT = BASE_DIR.joinpath("static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR.joinpath("media")
-
 
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_BROKER_TRANSPORT_OPTIONS = {"fanout_prefix": True, "fanout_patterns": True}

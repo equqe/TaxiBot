@@ -13,14 +13,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.permissions import ModelActionsPermission
-from cabinet.models import User
-from cabinet.utils.balance import update_user_balance
-from cabinet.utils.driver import make_driver_active
-from dispatcher.models import Settings as DispatcherSettings, Order
-from dispatcher.serializers import SettingsSerializer as DispatcherSettingsSerializer
-from dispatcher.serializers import UserLocationSerializer
-from referral.serializers import CouponSerializer
+from .models import User
+from .utils.balance import update_user_balance
+from .utils.driver import make_driver_active
+from .dispatcher.models import Settings as DispatcherSettings, Order
+from .dispatcher.serializers import SettingsSerializer as DispatcherSettingsSerializer
+from .dispatcher.serializers import UserLocationSerializer
+from .referral.serializers import CouponSerializer
 from . import models
 from .exceptions import USER_IS_REGISTERED
 from .models import Settings as CabinetSettings
@@ -35,6 +34,7 @@ from .serializers import (
 )
 from .utils.serializers import UserExtendedSerializer
 from .utils.user import get_user_by_chat_id
+from ..api.permissions import ModelActionsPermission
 
 
 class RegisterUserFromTelegramAPI(generics.GenericAPIView):
@@ -101,11 +101,14 @@ class GetUserApiByTelegramTokenAuth(APIView):
             )
 
     def get(self, request, token):
-        user = User.objects.get(telegram_auth_token=token)
-        user.has_active_order = Order.objects.in_progress().filter(client=user).exists()
-        data = self.OutputSerilializer(
-            user
-        ).data
+        try:
+            user = User.objects.get(telegram_auth_token=token)
+            user.has_active_order = Order.objects.in_progress().filter(client=user).exists()
+            data = self.OutputSerilializer(
+                user
+            ).data
+        except User.DoesNotExist:
+            data = {"message": "Токен не найден"}
         return Response(data, status=status.HTTP_200_OK)
 
 

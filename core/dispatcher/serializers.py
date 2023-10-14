@@ -273,3 +273,28 @@ class SettingsSerializer(serializers.ModelSerializer):
 
 class SettingsOnlyWebAppMapCenterSerializer(serializers.Serializer):
     web_app_map_center = GeometryField()
+
+
+from cabinet import models as cabinet_models
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = cabinet_models.Car
+        fields = "__all__"
+
+class DriverAuthenticateSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    car = CarSerializer()
+
+    class Meta:
+        model = cabinet_models.Driver
+        fields = "__all__"
+        read_only_fields = ("created_at",)
+
+    def create(self, validated_data):
+        car_data = validated_data.pop('car')
+        car, created_at = cabinet_models.Car.objects.get_or_create(**car_data)
+        driver = cabinet_models.Driver.objects.create(car=car, **validated_data)
+        return driver
+
+

@@ -10,6 +10,7 @@ from cabinet.api import (
     update_user_balance_api_view,
     update_users_location, GetUserApiByTelegramTokenAuth,
 )
+from core.dispatcher.views import RegisterDriverView
 from dispatcher.api import (
     CreateOrderAPI,
     DriverPickOrderAPI,
@@ -39,6 +40,7 @@ urlpatterns = [
     path("users/outOnTheLineDriver/", OutOnTheLineDriver.as_view()),
     path("users/finishWorkDay/", finish_driver_work_day),
     path("users/updateUser/<int:pk>/", UpdateUserAPIView.as_view()),
+    path("users/driver/register/", RegisterDriverView.as_view()),
 
     path("orders/createOrder/", CreateOrderAPI.as_view()),
     path("orders/reCreateOrder/", ReCreateOrderAPI.as_view()),

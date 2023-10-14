@@ -78,6 +78,7 @@ class User(AbstractUser):
         verbose_name="Дата последней отправки сообщения о том, что 5 дней не было заказов",
     )
 
+
     objects = UserManager()
 
     def __str__(self):
