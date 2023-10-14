@@ -320,11 +320,15 @@ class Driver(models.Model):
     photo = models.ImageField(
         upload_to=DRIVER_PHOTO_UPLOAD_TO, verbose_name="Фотография водителя"
     )
+    time_blocked_message_order = models.DateTimeField(null=True, blank=True)
+    
+    count_not_accepted = models.IntegerField(null=True, blank=True, default=0)
 
     @property
     def is_active(self):
         # Возвращает True, если водитель в данный момент на линии (идёт рабочий день)
         return bool(self.work_days.active())
+
 
 
 class Car(models.Model):
@@ -412,4 +416,15 @@ class Settings(models.Model):
 
     class Meta:
         verbose_name = "Настройки кабинета"
+        verbose_name_plural = verbose_name
+
+
+class SettingsDriverMessageBan(models.Model):
+
+    count_not_accepted = models.PositiveIntegerField(verbose_name="Количество отказов")
+
+    count_minute_blocked = models.PositiveIntegerField(verbose_name="Колличество минут блокировки")
+
+    class Meta:
+        verbose_name = "Настройки блокировки водителя"
         verbose_name_plural = verbose_name

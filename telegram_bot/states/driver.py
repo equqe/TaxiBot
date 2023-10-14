@@ -7,3 +7,8 @@ class DriverMenu(StatesGroup):
     """
 
     order_in_progress = State()
+
+
+class OrderStateDriver(StatesGroup):
+
+    order_start = State()

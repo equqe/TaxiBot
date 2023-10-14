@@ -142,6 +142,11 @@ class Order(models.Model):
     )
     entrance = models.CharField("Подъезд", blank=True, null=True, max_length=4)
 
+    driver_not_accepted = models.ManyToManyField(to="cabinet.Driver", through="dispatcher.OrderDriverNotAccepted",
+                                                 blank=True, null=True,
+                                                 related_name="order_not_accepted"
+                                                 )
+
     objects = OrderQuerySet.as_manager()
 
     def __str__(self):
@@ -160,6 +165,11 @@ class Order(models.Model):
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
         ordering = ["-start_date"]
+
+class OrderDriverNotAccepted(models.Model):
+    driver = models.ForeignKey("cabinet.Driver", on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
 
 
 class OrderRevision(models.Model):

@@ -1,6 +1,7 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 from data.buttons import (
     ADD_PHONE_NUMBER,
+    CONTACT_DATA,
     DRIVER_CABINET,
     ORDER_A_TAXI,
     REFERRAL_PROGRAM,
@@ -20,12 +21,11 @@ async def main_menu_keyboard(user: User) -> ReplyKeyboardMarkup:
     logger.info(f"Запрос на клавиатуру главного меню. Пользователь: {user} {user.telegram_auth_token=}")
     keyboard = ReplyKeyboardMarkup(
         row_width=1, resize_keyboard=True, one_time_keyboard=True
-    )   
+    )
     if user.phone_number:
         keyboard.add(
             KeyboardButton(
-                text=ORDER_A_TAXI,
-                web_app=WebAppInfo(url=WEB_BOT_URL + "?telegram_auth_token=" + user.telegram_auth_token),
+                text=ORDER_A_TAXI
             )
         )
     else:
@@ -35,5 +35,5 @@ async def main_menu_keyboard(user: User) -> ReplyKeyboardMarkup:
 
     if user.driver:
         keyboard.add(KeyboardButton(DRIVER_CABINET))
-
+    keyboard.add(KeyboardButton(CONTACT_DATA))
     return keyboard

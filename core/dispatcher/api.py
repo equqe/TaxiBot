@@ -5,6 +5,7 @@ from django.conf import settings
 
 from django.db.models import F
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -18,10 +19,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers, status
 
-from cabinet.models import Settings as CabinetSettings, Driver
+from cabinet.models import Settings as CabinetSettings, Driver, SettingsDriverMessageBan
 from cabinet.models import User
 from cabinet.utils.driver import check_driver
-from cabinet.serializers import DriverSerializer
+from cabinet.serializers import DriverSerializer, TelegramUserAPISerializer
+from dispatcher.tasks import driver_not_accepted_clear
 from dispatcher.utils.geolocator import get_address_by_location
 from dispatcher.utils.order import get_cost_of_order, set_driver_to_order
 from referral.models import Coupon
@@ -46,7 +48,7 @@ from .serializers import (
     SettingsSerializer as DispatcherSettingsSerializer,
     SettingsOnlyWebAppMapCenterSerializer,
 )
-from .settings import IN_PROGRESS_STATUSES, ORDER_CANCELED_BY_CLIENT
+from .settings import IN_PROGRESS_STATUSES, ORDER_CANCELED_BY_CLIENT, WAIT_TO_ACCEPT
 
 
 class CreateOrderAPI(APIView):
@@ -400,3 +402,45 @@ class GetMapCenterAPIView(APIView):
         serializer = SettingsOnlyWebAppMapCenterSerializer(settings)
 
         return JsonResponse(serializer.data)
+
+
+class DriverAnalyticsOrderAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        
+        serializers = TelegramUserAPISerializer(data=request.data)
+        serializers.is_valid(raise_exception=True)
+        
+        user = User.objects.select_related("balance", "driver").get(
+            telegram_data__chat_id=serializers.validated_data.get("chat_id")
+        )
+        check_driver(user)
+        order = get_object_or_404(Order.objects.only("id"), id=pk)
+        if WAIT_TO_ACCEPT != order.status:
+            return JsonResponse({"detail": "order status is not Wait To Accept"}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            if not user.driver.order_not_accepted.filter(id=order.id).exists():
+                try:
+                    settings_driver_blocked = SettingsDriverMessageBan.objects.last()
+                    minute = settings_driver_blocked.count_minute_blocked
+                    count = settings_driver_blocked.count_not_accepted
+                except:
+                    minute = 5
+                    count = 5
+                if count >= user.driver.count_not_accepted + 1:
+                    date = datetime.datetime.now() + datetime.timedelta(minutes=minute)
+                    
+                    user.driver.time_blocked_message_order = date
+                    date_str = date.strftime('%m/%d/%Y, %H:%M:%S')
+                    data = {"message":f"Вы заблокированны до {date_str}", "is_block": True}
+                else:
+                    
+                    user.driver.count_not_accepted += 1
+                    data = {"message":f"count not accepted: {user.driver.count_not_accepted}", "is_block": False}
+                user.driver.order_not_accepted.add(order)
+                user.driver.save()
+                driver_not_accepted_clear.apply_async(kwargs={"driver_id": user.driver.id}, countdown= minute * 60)
+                return JsonResponse({"detail": data}, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({"detail": "order is not accepted"}, status=status.HTTP_400_BAD_REQUEST)

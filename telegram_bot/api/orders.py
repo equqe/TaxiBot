@@ -18,7 +18,6 @@ class OrderAPIMethods:
 
     async def create_order(self, data: dict):
         json_data = parse_order_data_from_state(data)
-
         order_data = await self._create_order(json_data=json_data)
 
         return initialize_order(order_data)
@@ -112,3 +111,18 @@ class OrderAPIMethods:
         )
 
         return OrderReview.parse_obj(await response.json())
+
+    async def analytics_driver_order_not_approved(self, order_id: int, chat_id: int) -> bool:
+        json_data = {"chat_id": int(chat_id)}
+        response = await self.session.post(self.base_url() + f"analytics/driver/order/{order_id}", json=json_data)
+        print(response, 'dadada', response.status)
+        # response = await post_request(
+        #     session=self.session,
+        #     url=self.base_url() + f"analytics/driver/order/{order_id}",
+        #     json_data=json_data,
+        #     headers=self.headers,
+        # )
+        if response.status == 200:
+            return True
+        else:
+            return False

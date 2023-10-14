@@ -64,6 +64,7 @@ class EnvironmentTokenAuthentication(BaseAuthentication):
 
     def authenticate_credentials(self, token: str):
         if token == settings.ENVIROMENT_CORE_TOKEN:
+        
             return (self._user, None)
         else:
             raise AuthenticationFailed()

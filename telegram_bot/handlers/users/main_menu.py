@@ -1,22 +1,11 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import Command
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-from os import remove as remove_file
-
-from aiogram import types
-from data.config import ICONS_MEDIA_URL
-from data.texts import HELLO_STICKER_ID, START_NEW_USER, START_OLD_USER
-from handlers.users.main_menu import main_menu_handler
-from loader import bot, core, dp
-from utils.exceptions import UserIsRegistered
-
-from data.buttons import ADD_PHONE_NUMBER
+from data.buttons import ADD_PHONE_NUMBER, CONTACT_DATA
 from data.texts import OPEN_MAIN_MENU, SEND_PHONE, WRONG_PHONE
 from keyboards.default import main_menu_keyboard
 from keyboards.default.request_data import request_data_keyboard
 from loader import bot, core, dp
-from data import texts as t_data
 from middlewares.authentication import authenticate
 from states.main_menu import UpdatePhoneNumber
 from utils.phone_numbers import validate_phone_number
@@ -53,6 +42,10 @@ async def phone_number_handler(message: types.Message):
         SEND_PHONE, reply_markup=await request_data_keyboard(buttons=["phone"])
     )
 
+
+@dp.message_handler(text=CONTACT_DATA)
+async def phone_number_handler(message: types.Message):
+    await message.reply_document(open("data/static/contact_data.doc", 'rb'))
 
 @dp.message_handler(
     state=UpdatePhoneNumber.is_active, content_types=types.ContentTypes.ANY

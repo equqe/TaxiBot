@@ -147,10 +147,10 @@ async def review_keyboard(order_id) -> InlineKeyboardMarkup:
     pass
 
 
-async def address_write_inline_keyboard(exit=False, back=False) -> InlineKeyboardMarkup:
+async def address_write_inline_keyboard(exit=False, back=False, switch_text="") -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=1)
     keyboard.add(
-        InlineKeyboardButton(text=WRITE_ADDRESS, switch_inline_query_current_chat="")
+        InlineKeyboardButton(text=WRITE_ADDRESS, switch_inline_query_current_chat=switch_text)
     )
 
     if back:

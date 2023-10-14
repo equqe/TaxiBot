@@ -13,6 +13,7 @@ from cabinet.api import (
 from core.dispatcher.views import RegisterDriverView
 from dispatcher.api import (
     CreateOrderAPI,
+    DriverAnalyticsOrderAPIView,
     DriverPickOrderAPI,
     ReCreateOrderAPI,
     UpdateOrderAPI,
@@ -59,4 +60,6 @@ urlpatterns = [
 
     path("getAllSettings/", GetAllSettingsAPIView.as_view()),
     path("map-center/", GetMapCenterAPIView.as_view()),
+
+    path('analytics/driver/order/<int:pk>', DriverAnalyticsOrderAPIView.as_view()),
 ]

@@ -1,28 +1,27 @@
 from pathlib import Path
 
 from environs import Env
-
+from dotenv import load_dotenv
 # Теперь используем вместо библиотеки python-dotenv библиотеку environs
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env()
-env.read_env()
+print(env)
+DEBUG = 1
 
-DEBUG = env.bool("DEBUG")
-
-BOT_TOKEN = env.str("BOT_TOKEN")  # Забираем значение типа str
-DADATA_TOKEN = env.str("DADATA_TOKEN")
-ADMINS = env.list("ADMINS")  # Тут у нас будет список из админов
+BOT_TOKEN = "6052608761:AAHu8lHJ0ra9kPD5GdSLLjieRISEh5Ufeh4"  # Забираем значение типа str
+DADATA_TOKEN = "09aa69fe647bcfa4a7032a08123a9b9314366ea3"
+ADMINS = [860389338,805964909]  # Тут у нас будет список из админов
 
 for i in range(len(ADMINS)):
     ADMINS[i] = int(ADMINS[i])
 
-IP = env.str("ip")  # Тоже str, но для айпи адреса хоста
-WEB_BOT_URL = env.str("WEB_BOT_URL")
+IP = "0.0.0.0"  # Тоже str, но для айпи адреса хоста
+WEB_BOT_URL = "https://t.me/taxiber_testing_bot"
 
 # webhook settings
-CORE_TOKEN = env.str("CORE_TOKEN")
-WEBHOOK_HOST = env.str("WEBHOOK_HOST")
+CORE_TOKEN = "361672ce8be6e643d8f382f7a14e3a068636c7bc"
+WEBHOOK_HOST = "localhost"
 # if DEBUG:
 #     WEBHOOK_PATH = '/'+ CORE_TOKEN + '/'
 # else:
@@ -40,25 +39,25 @@ ORDER_REVISION_NOTIFY_WEBHOOK_PATH = WEBHOOK_PATH + "orderRevisionNotify/"
 
 # webserver settings
 WEBAPP_HOST = IP
-WEBAPP_PORT = env.int("port")
+WEBAPP_PORT = 8080
 
 
-CORE_TOKEN = env.str("CORE_TOKEN")
-QIWI_TOKEN = env.str("QIWI_TOKEN")
-QIWI_PHONE_NUMBER = env.str("QIWI_PHONE_NUMBER")
+CORE_TOKEN = CORE_TOKEN
+QIWI_TOKEN =""
+QIWI_PHONE_NUMBER = ""
 
-BASE_URL = env.str("CORE_BASE_URL")
+BASE_URL = "http://77.222.53.158"
 CORE_BASE_URL = BASE_URL + "/api/"
 CORE_HEADERS = {}
 
-CABINET_LOGIN_URL = env.str("CABINET_LOGIN_URL")
+CABINET_LOGIN_URL = "http://77.222.53.158/cabinet/telegram_auth_token_login/%s/"
 
 MEDIA_URL = BASE_DIR / "data/media/"
 ICONS_MEDIA_URL = MEDIA_URL / "telegram_icons"
 LOGGING_FILE_PATH = BASE_DIR / "data" / "logs" / "logging.log"
 
 
-REDIS_NAME = "redis"
+REDIS_NAME = "localhost"
 REDIS_PORT = 6379
 REDIS_LOCATION_DB = 1
 REDIS_FSM_DB = 2

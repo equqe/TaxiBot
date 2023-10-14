@@ -33,7 +33,7 @@ from keyboards.inline.order import (
     review_keyboard,
 )
 from keyboards.inline.pick_coupons import cb as pick_coupons_cb
-from loader import bot, core, dp
+from loader import bot, core, dp, location_storage
 from middlewares.authentication import authenticate
 from models.dispatcher import (
     ORDER_CANCELED_BY_CLIENT,
@@ -48,16 +48,17 @@ from states.order import (
     PICK_END_LOCATION,
     PICK_START_LOCATION,
     OrderReviewState,
+    OrderSity,
     OrderState,
 )
 from utils.checks import location_check
 from utils.exceptions import NoActionFound, OrderError
-from utils.geolocator import get_autocompletion_inline_results
+from utils.geolocator import get_sity_from_location, get_autocompletion_inline_results
 from utils.mailing import message_to_user_list
 from utils.phone_numbers import validate_phone_number
 
 
-async def set_step(chat_id: int, step_name: str):
+async def set_step(chat_id: int, step_name: str, data=None):
     if step_name == "pick_start_location":
         await bot.send_message(
             chat_id=chat_id,
@@ -72,7 +73,7 @@ async def set_step(chat_id: int, step_name: str):
         await bot.send_message(
             chat_id=chat_id,
             text=t.SEND_LOCATION_B,
-            reply_markup=await address_write_inline_keyboard(exit=True),
+            reply_markup=await address_write_inline_keyboard(exit=True, switch_text=data),
         )
 
     elif step_name == "pick_baby_chair":
@@ -203,6 +204,7 @@ async def order_taxi_handler(message):
         order = None
     # Если заказ найден, то выходим из функции
     if order:
+        await location_storage.set_data(key=f'user_order_{order.id}', data=message.from_user.id)
         return
 
     # Если заказ не найден, то начинаем оформление заказа
@@ -218,6 +220,7 @@ async def order_taxi_handler(message):
     text=WRITE_ADDRESS,
 )
 async def pick_start_location_text_handler(message: types.Message, state: FSMContext):
+
     await message.answer(
         f"Чтобы ввести адрес вручную нажмите на кнопку ниже. Если вы передумали, то нажмите «{BACK}» чтобы вернуться назад.",
         reply_markup=await address_write_inline_keyboard(back=True),
@@ -228,24 +231,27 @@ async def pick_start_location_text_handler(message: types.Message, state: FSMCon
     state=OrderState.pick_start_location, content_types=types.ContentTypes.ANY
 )
 @location_check  # Валидация сообщения на наличие геопозиции
-async def pick_start_location_handler(message, state):
+async def pick_start_location_handler(message: types.Message, state):
     """
     Принимает геопозицию точки отправления, проверяет на тип сообщения,
     сохраняет в хранилище объект Location
     """
+    
+    sity = await get_sity_from_location(location=message.location)
     await message.answer("Адрес отправки получен!")
+    await message.answer(str(initialize_location(message.location)))
     await state.update_data(start_location=initialize_location(message.location))
 
     print("Start location: ", message.location)
 
-    await set_step(message.from_user.id, "pick_end_location")
+    await set_step(message.from_user.id, "pick_end_location", sity)
 
 
 @dp.message_handler(
     state=OrderState.pick_end_location, content_types=types.ContentTypes.ANY
 )
 # @location_check
-async def pick_end_location_handler(message, state):
+async def pick_end_location_handler(message: types.Message, state):
     """
     Принимает геопозицию точки прибытия
     """
@@ -371,7 +377,7 @@ async def pick_accept_order_action(
         call: types.CallbackQuery, state: FSMContext, callback_data: dict
 ):
     action = callback_data.get("action")
-
+    print(callback_data, 'callback')
     if action == CANCEL_ORDER:
         order: Order = await get_order(client_chat_id=call.from_user.id, state=state)
         await cancel_order(order)
@@ -387,6 +393,7 @@ async def pick_accept_order_action(
             "Спасибо, что оставляете оценку, это поможет нам улучшить сервис! Выберите количество звёзд от 1 до 5.",
             reply_markup=await review_keyboard(order_id=callback_data[CB_ORDER_ID]),
         )
+
 
     elif action == CREATE_ORDER_REVISION:
         await call.message.edit_reply_markup(reply_markup=None)
