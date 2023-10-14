@@ -20,7 +20,7 @@ async def main_menu_keyboard(user: User) -> ReplyKeyboardMarkup:
     logger.info(f"Запрос на клавиатуру главного меню. Пользователь: {user} {user.telegram_auth_token=}")
     keyboard = ReplyKeyboardMarkup(
         row_width=1, resize_keyboard=True, one_time_keyboard=True
-    )
+    )   
     if user.phone_number:
         keyboard.add(
             KeyboardButton(

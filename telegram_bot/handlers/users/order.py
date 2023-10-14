@@ -91,9 +91,9 @@ async def set_step(chat_id: int, step_name: str):
         coupons = user.get_ride_discount_coupons()
 
         if not coupons:
-            # Сообщение о том, что купоны отсутствуют, временно убрано
-            # await bot.send_message(chat_id=chat_id,
-            #                        text=t.YOU_DONT_HAVE_COUPONS)
+            # Сообщение о том, что купоны отсутствуют, временно добавлненно 
+            await bot.send_message(chat_id=chat_id,
+                                   text=t.YOU_DONT_HAVE_COUPONS)
             return await set_step(chat_id=chat_id, step_name="pick_payment_method")
 
         await bot.send_message(

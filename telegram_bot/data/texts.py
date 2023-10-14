@@ -141,3 +141,6 @@ DRIVERS_HAD_FOUNDED = f"Я нашёл свободных водителей!\nН
 HELLO_STICKER_ID = (
     "CAACAgIAAxkBAAIUUGCEPl2uXSbVuFdU2OoLLYpswxbfAAKmCwAC_jVgSwnjOoGqkoQ2HwQ"
 )
+
+I_DRIVER = "Я водитель"
+I_CLIENT = "Я клиент"

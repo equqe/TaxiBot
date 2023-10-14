@@ -2,16 +2,6 @@ version: "3"
 
 services:
 
-  database:
-    image: postgis/postgis
-    restart: always
-    env_file:
-      - ./database/.env
-    volumes:
-      - ./database/data:/var/lib/postgresql/data
-    networks:
-      - backend
-
   redis:
     image: redis
     command: "redis-server --requirepass foobared"
@@ -23,38 +13,6 @@ services:
     networks:
       - backend
 
-  core:
-    build: core
-    command: sh -c "python manage.py migrate && python manage.py collectstatic
-      --no-input && sh ./bin/start_gunicorn.sh"
-    restart: always
-    volumes:
-      - ./core:/app/core/
-    env_file:
-      - ./core/.env
-    ports:
-      - "${CORE_EXTERNAL_PORT}:8001"
-    depends_on:
-      - database
-      - redis
-    networks:
-      - backend
-
-  celery_worker:
-    build: core
-    command: sh -c "celery -A core worker -c 1 -l INFO -f
-      /app/core/logs/celery_worker.log -B --scheduler
-      django_celery_beat.schedulers:DatabaseScheduler"
-    restart: always
-    volumes:
-      - ./core:/app/core/
-    depends_on:
-      - core
-      - redis
-      - database
-      - telegram_bot
-    networks:
-      - backend
 
   telegram_bot:
     build: telegram_bot
@@ -64,27 +22,11 @@ services:
     env_file:
       - ./telegram_bot/.env
     ports:
-      - "${TGBOT_EXTERNAL_PORT}:8080"
+      - "${TGBOT_EXTERNAL_PORT}:80"
     depends_on:
-      - database
       - redis
-      - core
     networks:
       - backend
-  
-  web_app:
-    build: web_app
-    volumes:
-      - './web_app:/app'
-      - '/app/node_modules'
-    restart: "always"
-    env_file:
-      - ./web_app/.env
-    ports:
-      - "${WEB_APP_EXTERNAL_PORT}:80"
-    depends_on:
-      - telegram_bot
-      - core
       
 
 networks:
