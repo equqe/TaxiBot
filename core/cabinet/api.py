@@ -16,10 +16,10 @@ from rest_framework.views import APIView
 from .models import User
 from .utils.balance import update_user_balance
 from .utils.driver import make_driver_active
-from .dispatcher.models import Settings as DispatcherSettings, Order
-from .dispatcher.serializers import SettingsSerializer as DispatcherSettingsSerializer
-from .dispatcher.serializers import UserLocationSerializer
-from .referral.serializers import CouponSerializer
+from dispatcher.models import Settings as DispatcherSettings, Order
+from dispatcher.serializers import SettingsSerializer as DispatcherSettingsSerializer
+from dispatcher.serializers import UserLocationSerializer
+from referral.serializers import CouponSerializer
 from . import models
 from .exceptions import USER_IS_REGISTERED
 from .models import Settings as CabinetSettings
