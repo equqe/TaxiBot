@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import Command
 from data.buttons import ADD_PHONE_NUMBER, CONTACT_DATA
-from data.texts import OPEN_MAIN_MENU, SEND_PHONE, WRONG_PHONE
+from data.texts import OPEN_MAIN_MENU, SEND_PHONE, WRONG_PHONE, I_DRIVER, I_CLIENT
 from keyboards.default import main_menu_keyboard
 from keyboards.default.request_data import request_data_keyboard
 from loader import bot, core, dp
