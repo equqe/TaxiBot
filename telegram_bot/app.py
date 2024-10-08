@@ -129,7 +129,7 @@ async def update_user_locations_task():
         try:
             await update_user_locations()
         except Exception as E:
-            logger.warning(f"Не удалось обновить геопозицию водителей {E.args}")
+            logger.warning(f"Не удалось обновить геопозицию водителей: {E.args}")
         await asyncio.sleep(UPDATE_DRIVER_LOCATION_PERIOD)
 
 
